@@ -10,30 +10,11 @@ import './index.css';
 
 import { store } from './app/store';
 import { getItems } from './slices/itemsSlice';
-import { getNotifications } from './slices/notificationsSlice';
 
-import { back4appApi } from './services/back4Dataservice';
-
-import Parse from 'parse/dist/parse.min.js';
-
-Parse.initialize('gyK4yLMJ7Vkdxl10WEuLToXTqtUYiumw8UqPxTmQ', 'Y2Jq1AYuOe08rQbA8rbB3atRQnSEInRgFEFMRGLM');
-
-Parse.serverURL = 'https://parseapi.back4app.com/';
-
-// let query = new Parse.Query('Person');
-// let subscription = await query.subscribe();
-
-// subscription.on('open', () => {
-//   console.log('subscription opened');
-//  });
-
-window.api = back4appApi();
 
 async function fetchItemBeforeRender() {
 
   await store.dispatch(getItems());
-
-  // await store.dispatch(getNotifications());
 
   const container = document.getElementById('root');
 

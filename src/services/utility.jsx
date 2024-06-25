@@ -26,23 +26,6 @@ export function formHandller(callback) {
     };
 }
 
-export function makeCorrectIdForRedux(data) {
-    if (data.type === 'item') {
-        const { _id: id, title, category, description, imgUrl, bider, owner, price, __v } = data;
-
-        return { id, title, category, description, imgUrl, bider, owner, price, __v };
-
-    } else if (data.type === 'user') {
-        const { _id: id, firstname, lastname, email } = data;
-
-        return { id, firstname, lastname, email };
-    } else if (data.type === 'notice') {
-        const { _id: id, message, aboutProduct, fromUser, toUser,answer,date } = data;
-
-        return { id, message, aboutProduct, fromUser, toUser,answer,date };
-    }
-}
-
 
 export const validator = (value) => {
     let error;

@@ -16,7 +16,7 @@ export default function Details() {
     const user = useSelector(state => selectUserFromCatalog(state));
 
     if (item) {
-        const isOwner = true //item.owner === user?.id;
+        const isOwner = item.owner === user?.id;
         if (isOwner) {
             return (
                 <Owner item={item} user={user} />

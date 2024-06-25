@@ -5,25 +5,40 @@ import { Route, Routes } from 'react-router-dom';
 import { selectAuthError } from './slices/authSlice';
 import { selectItemsError } from './slices/itemsSlice';
 
+// import Login from './components/auth/LoginComponent';
+// import Logout from './components/auth/LogoutComponent';
+// import Register from './components/auth/RegisterComponent';
+
+// import Home from './components/common/HomeComponent';
+// import Header from './components/common/HeaderComponents';
+// import Error from './components/common/ErrorComponent';
+// import Default from './components/common/DefaultComponent';
+// import Catalog from './components/common/catalog/CatalogComponent';
+// import Details from './components/common/details/DetailsComponent';
+// import UserClosedOffers from './components/common/closed-offers/UserClosedOffersComponent';
+
+// import Edit from './components/action/EditItemComponent';
+// import Search from './components/action/SearchComponent';
+// import CreateItem from './components/action/CreateComponent';
+
+import { AuthGuard } from './guards/UserGuard';
+
 import Login from './components/auth/LoginComponent';
-import Logout from './components/auth/LogoutComponent';
 import Register from './components/auth/RegisterComponent';
+import Logout from './components/auth/LogoutComponent';
 
 import Home from './components/common/HomeComponent';
 import Header from './components/common/HeaderComponents';
 import Error from './components/common/ErrorComponent';
 import Default from './components/common/DefaultComponent';
+
+import Edit from './components/action/EditItemComponent';
 import Catalog from './components/common/catalog/CatalogComponent';
 import Details from './components/common/details/DetailsComponent';
 import UserClosedOffers from './components/common/closed-offers/UserClosedOffersComponent';
-
-import Edit from './components/action/EditItemComponent';
 import Search from './components/action/SearchComponent';
 import CreateItem from './components/action/CreateComponent';
 
-import { AuthGuard } from './guards/UserGuard';
-import RecivedNotices from './components/common/notice/RecivedNotice';
-import NoticeList from './components/common/notice/NoticeList';
 
 
 function App() {
@@ -46,8 +61,6 @@ function App() {
             <Route path='/closed' element={<UserClosedOffers />} />
             <Route path='/create' element={<CreateItem />} />
             <Route path='/edit/:id' element={<Edit />} />
-            <Route path='/notice' element={<NoticeList />} />
-            <Route path='/notice/:id' element={<RecivedNotices />} />
           </Route>
 
           <Route path='/login' element={<Login />} />

@@ -4,11 +4,10 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import { clearUser, formHandller } from '../../services/utility';
+import { clearUser} from '../../services/utility';
 
 import {  setPersistedStateToNull } from '../../slices/authSlice';
 import { cleanErrorFromCatalog, deleteItem, getItems, setErrorToCatalog } from '../../slices/itemsSlice';
-import { setNotification } from '../../slices/notificationsSlice';
 
 
 
@@ -22,7 +21,7 @@ export default function Error({ error }) {
             clearUser();
             dispatch(setPersistedStateToNull());
             dispatch(getItems());
-            navigate('/catalog')
+            navigate('/catalog');
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -31,47 +30,6 @@ export default function Error({ error }) {
         dispatch(cleanErrorFromCatalog());
     }
 
-    if (Array.isArray(error) && error.includes('Comment')) {
-         console.log(error);
-        async function sendMessage(comment) {
-            const toUser = error[1].owner;
-            const fromUser = error[2].id;
-            const aboutProduct = error[1].id;
-            const message = comment.description;
-
-            const data = {
-                fromUser,
-                aboutProduct,
-                toUser,
-                message
-            };
-
-            const result = await dispatch(setNotification(data));
-
-            if(result.error){
-                return;
-            }else{
-                navigate('/notice');
-            }
-            
-        }
-
-        const onSubmit = formHandller(sendMessage);
-
-        return (
-            <div className="error-box">
-                <form id='delete' className="noticeForm" style={{ padding: '18px' }} onSubmit={onSubmit}>
-                    <label>
-                        <textarea name="description" placeholder="write your message..." style={{ margin: '0px', width: '350px', height: '64px' }}></textarea>
-                    </label>
-                    <div className="align-center" >
-                        <input type="submit" value="Send Message" />
-                    </div>
-                </form>
-            </div>
-        );
-
-    }
     if (Array.isArray(error)) {
         return (
             <div className="error-box">
