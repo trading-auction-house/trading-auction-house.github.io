@@ -27,7 +27,7 @@ export default function Home() {
 
                 <div className="layout left med">
                     <div className="col">
-                        <img src="/static/assets/splash.jpg" className="img-med" alt="static" />
+                        <img src="/static/static-ass/splash.jpg" className="img-med" alt="static" />
                     </div>
 
                     <div className="content pad-med">

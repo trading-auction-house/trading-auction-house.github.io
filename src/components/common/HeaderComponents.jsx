@@ -10,7 +10,7 @@ export default function Header() {
     return (
         <header>
             <Link to="/" className="title-logo">
-                <img src="/static/assets/logo.png" alt="static" />
+                <img src="/static/static-ass/logo.png" alt="static" />
                 <span>Auction House</span>
             </Link>
             <nav className="main-nav nav-mid">
