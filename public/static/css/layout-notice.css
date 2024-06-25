@@ -1,0 +1,117 @@
+/* Received notice */
+@import 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css';
+
+
+.notice {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#catalog-section {
+    box-shadow: 8px 8px 16px 8px rgba(0, 0, 0, 0.2);
+}
+
+
+.item.noticeHeader {
+
+    box-shadow: none;
+}
+
+.notice .userName,
+.notice .userMassege {
+    margin-bottom: 20px;
+    max-width: 350px;
+    text-align: center;
+}
+
+.notice .userName>span {
+    font-weight: 600;
+}
+
+.notice .userMassege span {
+    margin-right: 20px;
+}
+
+.noticeContainer {
+    display: flex;
+    justify-content: space-between;
+    background-color: #e4e7e4;
+}
+
+.noticeSection{
+    overflow: hidden;
+}
+
+
+.imgContainer {
+    max-width: 400px;
+}
+
+.noticeImg {
+    max-width: 400px;
+    transition: transform 300ms ease-in-out;
+}
+
+.noticeImg:hover {
+    transform: scale(1.5);
+}
+
+.noticeForm input {
+    background-color: #7d367d;
+    color: #ffffff;
+    border: none;
+    padding: 4px 8px;
+    font-weight: 600;
+}
+
+
+.noticeForm input {
+    display: block;
+    margin: auto;
+}
+
+.notice input:hover {
+    background-color: hsl(var(--action-color), var(--action-s), var(--action-l));
+    cursor: pointer;
+    color: white;
+}
+
+.noticeForm textarea {
+    display: block;
+    margin-bottom: 20px;
+    width: 100%;
+    resize: vertical;
+}
+
+/* noticeList */
+
+
+.partialNotice {
+    list-style: none;
+    border-bottom: 1px solid black;
+    padding: 8px 16px;
+    max-height: 50px;
+}
+
+p.message {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    margin: 0;
+    padding: 8px 4px;
+}
+
+.partialNotice:last-child {
+    border-bottom: none;
+}
+
+.list {
+    display: block;
+    max-width: 85%;
+    padding: 0px;
+    margin: 24px auto;
+    border: 1px solid black;
+    border-radius: 2px;
+}
