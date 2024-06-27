@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-restricted-imports */
+import { Suspense, lazy } from 'react';
 import { useSelector } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 
@@ -6,6 +7,8 @@ import { selectAuthError } from './slices/authSlice';
 import { selectItemsError } from './slices/itemsSlice';
 
 import { AuthGuard } from './guards/UserGuard';
+import { GuestGuard } from './guards/GuestGuard';
+import ErrorBoundary from './guards/errorboundary';
 
 import Login from './components/auth/LoginComponent';
 import Register from './components/auth/RegisterComponent';
@@ -15,15 +18,15 @@ import Home from './components/common/HomeComponent';
 import Header from './components/common/HeaderComponents';
 import Error from './components/common/ErrorComponent';
 import Default from './components/common/DefaultComponent';
+import Details from './components/common/details/DetailsComponent';
+import Catalog from './components/common/catalog/CatalogComponent';
+import Spinner from './components/common/Spinner';
 
 import Edit from './components/action/EditItemComponent';
-import Catalog from './components/common/catalog/CatalogComponent';
-import Details from './components/common/details/DetailsComponent';
-import UserClosedOffers from './components/common/closed-offers/UserClosedOffersComponent';
 import Search from './components/action/SearchComponent';
 import CreateItem from './components/action/CreateComponent';
 
-
+const UserClosedOffers = lazy(() => import('./components/common/closed-offers/UserClosedOffersComponent'));
 
 function App() {
   const authError = useSelector(selectAuthError);
@@ -31,29 +34,37 @@ function App() {
   const error = itemsError || authError;
 
   return (
+
     <div id="page-content">
       <Header />
       {error && <Error error={error} />}
       <main>
-        <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/catalog' element={<Catalog />} />
-          <Route path='/details/:id' element={<Details />} />
-          <Route path='/search' element={<Search />} />
+        <ErrorBoundary>
+          <Suspense fallback={<Spinner />}>
+            <Routes>
+              <Route path='/' element={<Home />} />
+              <Route path='/catalog' element={<Catalog />} />
+              <Route path='/details/:id' element={<Details />} />
+              <Route path='/search' element={<Search />} />
 
-          <Route element={<AuthGuard />}>
-            <Route path='/closed' element={<UserClosedOffers />} />
-            <Route path='/create' element={<CreateItem />} />
-            <Route path='/edit/:id' element={<Edit />} />
-          </Route>
+              <Route element={<AuthGuard />}>
+                <Route path='/closed' element={<UserClosedOffers />} />
+                <Route path='/create' element={<CreateItem />} />
+                <Route path='/edit/:id' element={<Edit />} />
+              </Route>
 
-          <Route path='/login' element={<Login />} />
-          <Route path='/register' element={<Register />} />
-          <Route path='/logout' element={<Logout />} />
+              <Route element={<GuestGuard />}>
+                <Route path='/login' element={<Login />} />
+                <Route path='/register' element={<Register />} />
+              </Route>
 
-          <Route path='*' element={<Default />} />
+              <Route path='/logout' element={<Logout />} />
 
-        </Routes>
+              <Route path='*' element={<Default />} />
+
+            </Routes>
+          </Suspense>
+        </ErrorBoundary>
       </main>
       <footer>SoftUni &copy; 2024 React Redux</footer>
     </div>
