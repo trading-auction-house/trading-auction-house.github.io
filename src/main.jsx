@@ -2,7 +2,8 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter as Router} from 'react-router-dom';
+
 
 import App from './App';
 
@@ -24,9 +25,9 @@ async function fetchItemBeforeRender() {
     root.render(
       <React.StrictMode>
         <Provider store={store}>
-          <BrowserRouter>
+          <Router>
             <App />
-          </BrowserRouter>
+          </Router>
         </Provider>
       </React.StrictMode>,
     );
