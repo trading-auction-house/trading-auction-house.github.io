@@ -25,7 +25,7 @@ export const createItem = createAsyncThunk(
     'items/createItem',
     async (data, { rejectWithValue }) => {
         try {
-            validator(data);
+            // validator(data);
             const result = await saveItem(data);
             return result;
         } catch (error) {
@@ -215,11 +215,13 @@ const itemsSlice = createSlice({
             })
             .addCase(createItem.fulfilled, (state, action) => {
                 state.status = 'createItemSucceeded';
+                
+                action.payload.imgUrl = action.payload.imgUrl._url;
 
                 itemsAdapter.addOne(state, action.payload);
             })
             .addCase(createItem.rejected, (state, action) => {
-                state.status = 'createItemSucceeded';
+                state.status = 'createItemFail';
 
                 state.error = action.payload;
             });

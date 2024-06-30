@@ -13,7 +13,7 @@ import { cleanErrorFromCatalog, createItem, selectItemsError } from '../../slice
 export default function CreateItem() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    
+
     const authError = useSelector(selectAuthError);
     const itemsError = useSelector(selectItemsError);
 
@@ -35,7 +35,7 @@ export default function CreateItem() {
         if (result.error) {
             return;
         }
-        
+
         navigate('/catalog');
     };
 
@@ -64,12 +64,19 @@ export default function CreateItem() {
                                 <option value="other">Other</option>
                             </select>
                         </label>
-                        <label>
-                            <span>Image URL</span>
-                            <input type="text" name="imgUrl" /></label>
+                        <div style={{ display: 'flex', justifyContent: 'space-evenly', marginLeft: '28px', marginTop: '8px', marginBottom: '8px' }} >
+                            <span style={{ marginRight: '17px' }}>
+                                Yours Picture
+                            </span>
+                            <label style={{ border: '1px solid black', width: '200px', backgroundColor: 'white', cursor: 'pointer', height: '24px' }}>
+                                Chose your file
+                                <input type="file" name="imgUrl" style={{ opacity: '0', width: '0px', height: '0px' }} />
+                            </label>
+                        </div>
                         <label>
                             <span>Starting price</span>
-                            <input type="number" name="price" /></label>
+                            <input type="number" name="price" />
+                        </label>
                     </div>
 
                     <div className="content pad-med align-center vertical">

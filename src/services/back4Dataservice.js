@@ -58,9 +58,20 @@ export const back4appApi = () => {
     async function saveItem(params) {
         const currentUser = getUser();
 
+        const { imgUrl } = params;
+
+        const fileName = `photo.${imgUrl.name.split('.')[1]}`
+
+        const parseFile = new Parse.File(fileName, imgUrl);
+
         params.user = currentUser;
 
+
         try {
+            await parseFile.save()
+
+            params.imgUrl = parseFile;
+
             await Parse.Cloud.run('check', params);
 
             const result = await Parse.Cloud.run('saveItem', params);
@@ -86,7 +97,7 @@ export const back4appApi = () => {
         }
     }
 
-    async function getUserClosedOffers(){
+    async function getUserClosedOffers() {
         const user = getUser();
 
         try {
@@ -97,7 +108,7 @@ export const back4appApi = () => {
         }
     }
 
-    async function deleteItemFDB(id){
+    async function deleteItemFDB(id) {
         const sessionToken = getUser().sessionToken;
 
         const query = new Parse.Query('Item');
@@ -105,7 +116,7 @@ export const back4appApi = () => {
         try {
             const item = await query.get(id);
 
-            await item.destroy( {sessionToken});
+            await item.destroy({ sessionToken });
         } catch (error) {
             throw error.message;
         }
@@ -154,7 +165,7 @@ export const back4appApi = () => {
     }
 
 
-    return {     
+    return {
         cloudRegister,
         cloudLogin,
         cloudLogout,
