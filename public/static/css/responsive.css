@@ -1,0 +1,28 @@
+@media (max-width:600px) {
+    .nav-mid {
+        position: relative;
+    }
+
+    .main-nav li {
+        float: none;
+    }
+
+    #page-content>header {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+    }
+
+    .title-logo {
+        display: flex;
+        flex-direction: column-reverse;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    #page-content > header > a > img {
+        width: 100px;
+        height: 100px;
+    }
+
+}

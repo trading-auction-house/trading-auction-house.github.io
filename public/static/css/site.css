@@ -7,6 +7,7 @@
 @import url('./layout-forms.css');
 @import url('./spinner.css');
 @import url('./layout-notice.css');
+@import url('./responsive.css');
 
 .style-divider {
     background-color: red;
