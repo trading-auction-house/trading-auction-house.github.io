@@ -13,6 +13,10 @@
         justify-content: space-around;
     }
 
+    #page-content>header::after {
+        content: none;
+    }
+
     .title-logo {
         display: flex;
         flex-direction: column-reverse;
@@ -20,9 +24,71 @@
         align-items: center;
     }
 
-    #page-content > header > a > img {
+    #page-content>header>a>img {
         width: 100px;
         height: 100px;
+    }
+
+    .layout.left .col {
+        float: none;
+    }
+
+    .layout.left.med .content {
+        margin-left: 0px;
+    }
+
+    #register-section>div>form {
+        padding: 8px 26px;
+    }
+
+    .aligned {
+        text-align: center;
+    }
+
+    .layout.right .col {
+        float: none;
+    }
+
+    .layout.right.large .content {
+        margin: 0px;
+    }
+
+    #catalog-section {
+        box-shadow: none;
+    }
+
+    .catalog.cards li {
+        float: none;
+    }
+
+    .catalog.cards {
+        margin-right: auto;
+        margin-left: -10px;
+    }
+
+    .layout.left.large .content {
+        margin: 0px;
+    }
+
+    #create-section>div>form>div.col.aligned {
+        width: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 8px;
+    }
+
+    #create-section>div>form>div.col.aligned>div {
+        flex-direction: column;
+        margin-left: 0px;
+    }
+
+    #create-section>div>form>div.col.aligned>div>span {
+        margin-bottom: 8px;
+    }
+
+    #create-section>div>form>div.col.aligned>div>label {
+        margin-bottom: 8px;
     }
 
 }
