@@ -84,11 +84,28 @@
     }
 
     #create-section>div>form>div.col.aligned>div>span {
+        margin: 0px;
         margin-bottom: 8px;
     }
 
     #create-section>div>form>div.col.aligned>div>label {
         margin-bottom: 8px;
+    }
+
+    #create-section>div>form>div.col.aligned>div>label>input[type=file] {
+        margin-right: -16px;
+    }
+
+    #delete {       
+        flex-wrap: wrap;
+    }
+
+    #delete > button:nth-child(1){
+        margin: 16px;
+    }
+
+    #delete > button:nth-child(2){
+        margin: 16px;
     }
 
 }

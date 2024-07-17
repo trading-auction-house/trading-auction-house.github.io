@@ -64,13 +64,13 @@ export default function CreateItem() {
                                 <option value="other">Other</option>
                             </select>
                         </label>
-                        <div style={{ display: 'flex', justifyContent: 'space-evenly', marginLeft: '28px', marginTop: '8px', marginBottom: '8px' }} >
-                            <span style={{ marginRight: '17px' }}>
+                        <div className='devicePicture'>
+                            <span>
                                 Yours Picture
                             </span>
-                            <label style={{ border: '1px solid black', width: '200px', backgroundColor: 'white', cursor: 'pointer', height: '24px' }}>
+                            <label>
                                 Chose your file
-                                <input type="file" name="imgUrl" style={{ opacity: '0', width: '0px', height: '0px' }} />
+                                <input type="file" name="imgUrl"/>
                             </label>
                         </div>
                         <label>

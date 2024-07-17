@@ -22,7 +22,7 @@ export default function Edit() {
             data.price = item.price;
         }
         data.price = Number(data.price);
-        
+
         const result = await dispatch(editItem({ data, id }));
         if (result.error) {
             return;
@@ -61,10 +61,15 @@ export default function Edit() {
                                 </select>
                             </label>
 
-                            <label>
-                                <span>Image URL</span>
-                                <input type="text" name="imgUrl" defaultValue={item.imgUrl} />
-                            </label>
+                            <div className='devicePicture'>
+                                <span>
+                                    Yours Picture
+                                </span>
+                                <label>
+                                    Chose your file
+                                    <input type="file" name="imgUrl" />
+                                </label>
+                            </div>
 
                             <label>
                                 <span>Starting price</span>
