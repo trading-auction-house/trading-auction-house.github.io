@@ -10,15 +10,44 @@ export const back4appApi = () => {
 
     async function updateItem(data, id) {
         const sessionToken = getUser().sessionToken;
-
         const query = new Parse.Query('Item');
 
+        let parseFile;
+
+        const { newImage } = data;
+
+        if (newImage.name !== '') {
+            const newFileName = `photo.${newImage.name.split('.')[1]}`
+            parseFile = new Parse.File(newFileName, newImage);
+        }
+
         try {
+            if (parseFile !== undefined) {
+                await parseFile.save()
+                data.imgUrl = parseFile;
+            } else {
+                data.imgUrl = null;
+            }
+
+
             const item = await query.get(id);
 
-            item.set(data);
+            if (data.imgUrl !== null) {
+                item.set(data);
+            } else {
+                const { title, price, category, description } = data;
+                item.set({ title, price, category, description })
+            }
 
             await item.save(null, { sessionToken });
+
+            const updateItem = await query.get(id);
+
+            const itemId = updateItem.id;
+
+            const { title, category, imgUrl, owner, price, description } = updateItem.attributes;
+
+            return { id: itemId, title, category, imgUrl: imgUrl._url, owner: owner.id, price, description }
 
         } catch (error) {
             throw error.message;
@@ -61,7 +90,6 @@ export const back4appApi = () => {
         const { imgUrl } = params;
 
         const fileName = `photo.${imgUrl.name.split('.')[1]}`
-
         const parseFile = new Parse.File(fileName, imgUrl);
 
         params.user = currentUser;
@@ -91,7 +119,11 @@ export const back4appApi = () => {
     async function getCloudItems() {
         try {
             const result = await Parse.Cloud.run('getItems');
-            return result;
+            const data = result.items.map(item => {
+                item.imgUrl = item.imgUrl._url
+                return item
+            })
+            return data;
         } catch (error) {
             throw error.message;
         }

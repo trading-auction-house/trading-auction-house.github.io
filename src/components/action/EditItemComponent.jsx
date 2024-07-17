@@ -63,13 +63,18 @@ export default function Edit() {
 
                             <div className='devicePicture'>
                                 <span>
-                                    Yours Picture
+                                    Change Image
                                 </span>
                                 <label>
                                     Chose your file
-                                    <input type="file" name="imgUrl" />
+                                    <input type="file" name="newImage" />
                                 </label>
                             </div>
+
+                            <label>
+                                <span>Current Image</span>
+                                <input type="text" name="imgUrl" defaultValue={item.imgUrl} />
+                            </label>
 
                             <label>
                                 <span>Starting price</span>

@@ -41,11 +41,11 @@ export const editItem = createAsyncThunk(
         try {
             validator(data);
 
-            await updateItem(data, id);
+            const result = await updateItem(data, id);
 
-            data.id = id;
+            console.log(result)
 
-            return { ...data };
+            return result;
         } catch (error) {
             return rejectWithValue(error);
         }
@@ -139,7 +139,7 @@ const itemsSlice = createSlice({
             .addCase(getItems.fulfilled, (state, action) => {
                 state.status = 'fetchItemsSucceeded';
 
-                itemsAdapter.addMany(state, action.payload.items);
+                itemsAdapter.addMany(state, action.payload);
 
                 if (action.payload.user) {
                     state.user.id = action.payload.user;
@@ -215,7 +215,7 @@ const itemsSlice = createSlice({
             })
             .addCase(createItem.fulfilled, (state, action) => {
                 state.status = 'createItemSucceeded';
-
+                console.log(action.payload)
                 action.payload.imgUrl = action.payload.imgUrl._url;
 
                 itemsAdapter.addOne(state, action.payload);
