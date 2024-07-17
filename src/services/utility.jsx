@@ -31,11 +31,9 @@ export const validator = (value) => {
     let error;
     const arrOfCategories = ['vehicles', ' real', 'estate', 'electronics', 'furniture', 'other'];
 
-    const IMAGE_URL = /^https?:\/\/.*/i;
-
     const REGEX_FOR_Email = /^[A-Za-z]+@[A-Za-z]+\.[A-Za-z]+$/m;
 
-    const { title, category, imgUrl, price, description, email, username, password, repass, oldPrice } = value;
+    const { title, category, price, description, email, username, password, repass, oldPrice } = value;
 
     if (Object.values(value).some(x => x === '')) {
         error = ['All fields are required.'];
@@ -82,13 +80,6 @@ export const validator = (value) => {
     if (category) {
         if (!arrOfCategories.includes(category)) {
             error = ['It is not in the list of categories.'];
-            throw error;
-        }
-    }
-
-    if (imgUrl) {
-        if (!IMAGE_URL.test(imgUrl)) {
-            error = ['Invalid Url.'];
             throw error;
         }
     }
