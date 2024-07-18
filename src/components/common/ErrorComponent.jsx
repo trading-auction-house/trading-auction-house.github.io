@@ -14,7 +14,7 @@ import { cleanErrorFromCatalog, deleteItem, getItems, setErrorToCatalog } from '
 export default function Error({ error }) {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    console.log(error);
+
     useEffect(() => {
         // In case someone manipulates localStorage to make a request with a fake token.
         if ( error === 'Invalid session token'|| error === 'Object not found.') {

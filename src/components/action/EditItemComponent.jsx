@@ -18,12 +18,25 @@ export default function Edit() {
     const item = useSelector(state => selectItemById(state, id));
 
     const editCurrentItem = async (data) => {
+        let result;
+
+        const { title, category, imgUrl, price, description } = data;
+
+        const withoutImage = { title, category, price, description };
+
         if (!data.price) {
             data.price = item.price;
         }
         data.price = Number(data.price);
+        withoutImage.price = data.price;
 
-        const result = await dispatch(editItem({ data, id }));
+        if (imgUrl.name !== '') {
+            result = await dispatch(editItem({ data, id }));
+        } else {
+            data = withoutImage;
+            result = await dispatch(editItem({ data, id }));
+        }
+
         if (result.error) {
             return;
         } else {
@@ -66,15 +79,10 @@ export default function Edit() {
                                     Change Image
                                 </span>
                                 <label>
-                                    Chose your file
-                                    <input type="file" name="newImage" />
+                                    Chose new file
+                                    <input type="file" name="imgUrl" />
                                 </label>
                             </div>
-
-                            <label>
-                                <span>Current Image</span>
-                                <input type="text" name="imgUrl" defaultValue={item.imgUrl} />
-                            </label>
 
                             <label>
                                 <span>Starting price</span>

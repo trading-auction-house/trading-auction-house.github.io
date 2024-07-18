@@ -37,13 +37,10 @@ export const createItem = createAsyncThunk(
 export const editItem = createAsyncThunk(
     'items/editItem',
     async ({ data, id }, { rejectWithValue }) => {
-
         try {
             validator(data);
 
             const result = await updateItem(data, id);
-
-            console.log(result)
 
             return result;
         } catch (error) {
@@ -183,9 +180,9 @@ const itemsSlice = createSlice({
 
                 const item = state.entities[action.payload];
                 if (state.closedOffers === null) {
-                    state.closedOffers = [item]
+                    state.closedOffers = [item];
                 } else {
-                    state.closedOffers.push(item)
+                    state.closedOffers.push(item);
                 }
                 itemsAdapter.removeOne(state, action.payload);
             })
@@ -215,7 +212,7 @@ const itemsSlice = createSlice({
             })
             .addCase(createItem.fulfilled, (state, action) => {
                 state.status = 'createItemSucceeded';
-                console.log(action.payload)
+
                 action.payload.imgUrl = action.payload.imgUrl._url;
 
                 itemsAdapter.addOne(state, action.payload);
