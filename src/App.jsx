@@ -19,7 +19,6 @@ import Header from './components/common/HeaderComponents';
 import Error from './components/common/ErrorComponent';
 import Default from './components/common/DefaultComponent';
 import Details from './components/common/details/DetailsComponent';
-import Catalog from './components/common/catalog/CatalogComponent';
 import Spinner from './components/common/Spinner';
 
 import Edit from './components/action/EditItemComponent';
@@ -27,6 +26,7 @@ import Search from './components/action/SearchComponent';
 import CreateItem from './components/action/CreateComponent';
 
 const UserClosedOffers = lazy(() => import('./components/common/closed-offers/UserClosedOffersComponent'));
+const Catalog = lazy(() => import('./components/common/catalog/CatalogComponent'));
 
 function App() {
   const authError = useSelector(selectAuthError);
