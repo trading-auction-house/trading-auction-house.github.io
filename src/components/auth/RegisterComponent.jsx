@@ -6,12 +6,20 @@ import { useNavigate } from 'react-router-dom';
 import { formHandller } from '../../services/utility';
 
 import { setUserToCatalog } from '../../slices/itemsSlice';
-import { cleanAuthError, registerUser, selectAuthError } from '../../slices/authSlice';
+import { cleanAuthError, registerUser, selectAuthError, selectAuthStatus } from '../../slices/authSlice';
+import Spinner from '../common/Spinner';
 
 export default function Register() {
-  const dispatch = useDispatch();
   const error = useSelector(selectAuthError);
+
+  const status = useSelector(selectAuthStatus);
+
+  const dispatch = useDispatch();
+
   const navigate = useNavigate();
+
+  const registerRequest = status === 'registerStarted'
+
 
   useEffect(() => {
     if (error) {
@@ -37,39 +45,43 @@ export default function Register() {
   const onSubmit = formHandller(onRegister);
 
   return (
-    <section id="register-section" className="narrow">
+    <div>
+      {!registerRequest && <section id="register-section" className="narrow">
 
-      <h1 className="item">Register</h1>
+        <h1 className="item">Register</h1>
 
-      <div className="item padded align-center">
+        <div className="item padded align-center">
 
-        <form className="aligned" onSubmit={onSubmit} >
+          <form className="aligned" onSubmit={onSubmit} >
 
-          <label>
-            <span>Email</span>
-            <input type="text" name="email" />
-          </label>
-          <label>
-            <span>Username</span>
-            <input type="text" name="username" />
-          </label>
-          <label>
-            <span>Password</span>
-            <input type="password" name="password" />
-          </label>
-          <label>
-            <span>Repeat Password</span>
-            <input type="password" name="repass" />
-          </label>
+            <label>
+              <span>Email</span>
+              <input type="text" name="email" />
+            </label>
+            <label>
+              <span>Username</span>
+              <input type="text" name="username" />
+            </label>
+            <label>
+              <span>Password</span>
+              <input type="password" name="password" />
+            </label>
+            <label>
+              <span>Repeat Password</span>
+              <input type="password" name="repass" />
+            </label>
 
-          <div className="align-center">
-            <input className="action" type="submit" value="Create Account" />
-          </div>
+            <div className="align-center">
+              <input className="action" type="submit" value="Create Account" />
+            </div>
 
-        </form>
+          </form>
 
-      </div>
+        </div>
 
-    </section>
+      </section>}
+
+      {registerRequest && <Spinner />}
+    </div>
   );
 }
