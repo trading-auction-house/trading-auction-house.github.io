@@ -6,16 +6,22 @@ import { useDispatch, useSelector } from 'react-redux';
 import { formHandller } from '../../services/utility';
 
 import { cleanAuthError, selectAuthError } from '../../slices/authSlice';
-import { cleanErrorFromCatalog, createItem, selectItemsError } from '../../slices/itemsSlice';
+import { cleanErrorFromCatalog, createItem, selectItemsError, selectItemsStatus } from '../../slices/itemsSlice';
 
-
+import Spinner from '../common/Spinner';
 
 export default function CreateItem() {
     const navigate = useNavigate();
+
     const dispatch = useDispatch();
 
     const authError = useSelector(selectAuthError);
+
     const itemsError = useSelector(selectItemsError);
+
+    const status = useSelector(selectItemsStatus);
+
+    const createRequest = status === 'createItemStarted';
 
 
     useEffect(() => {
@@ -42,58 +48,61 @@ export default function CreateItem() {
     const onSubmit = formHandller(create);
 
     return (
-        <section id="create-section" className="">
+        <div>
+            {!createRequest && <section id="create-section" className="">
 
-            <h1 className="item">New Auction</h1>
+                <h1 className="item">New Auction</h1>
 
-            <div className="item padded align-center">
+                <div className="item padded align-center">
 
-                <form className="layout left large" onSubmit={onSubmit}>
+                    <form className="layout left large" onSubmit={onSubmit}>
 
-                    <div className="col aligned">
-                        <label>
-                            <span>Title</span>
-                            <input type="text" name="title" /></label>
-                        <label>
-                            <span>Category</span>
-                            <select name="category" defaultValue={'estate'} >
-                                <option value="estate">Real Estate</option>
-                                <option value="vehicles">Vehicles</option>
-                                <option value="furniture">Furniture</option>
-                                <option value="electronics">Electronics</option>
-                                <option value="other">Other</option>
-                            </select>
-                        </label>
-                        <div className='devicePicture'>
-                            <span>
-                                Yours Picture
-                            </span>
+                        <div className="col aligned">
                             <label>
-                                Chose your file
-                                <input type="file" name="imgUrl"/>
+                                <span>Title</span>
+                                <input type="text" name="title" /></label>
+                            <label>
+                                <span>Category</span>
+                                <select name="category" defaultValue={'estate'} >
+                                    <option value="estate">Real Estate</option>
+                                    <option value="vehicles">Vehicles</option>
+                                    <option value="furniture">Furniture</option>
+                                    <option value="electronics">Electronics</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </label>
+                            <div className='devicePicture'>
+                                <span>
+                                    Yours Picture
+                                </span>
+                                <label>
+                                    Chose your file
+                                    <input type="file" name="imgUrl" />
+                                </label>
+                            </div>
+                            <label>
+                                <span>Starting price</span>
+                                <input type="number" name="price" />
                             </label>
                         </div>
-                        <label>
-                            <span>Starting price</span>
-                            <input type="number" name="price" />
-                        </label>
-                    </div>
 
-                    <div className="content pad-med align-center vertical">
-                        <label>
-                            <span>Description</span>
-                            <textarea name="description" ></textarea>
-                        </label>
+                        <div className="content pad-med align-center vertical">
+                            <label>
+                                <span>Description</span>
+                                <textarea name="description" ></textarea>
+                            </label>
 
-                        <div className="align-center">
-                            <input className="action" type="submit" value="Publish Item" />
+                            <div className="align-center">
+                                <input className="action" type="submit" value="Publish Item" />
+                            </div>
                         </div>
-                    </div>
 
-                </form>
+                    </form>
 
-            </div>
+                </div>
 
-        </section>
+            </section>}
+            {createRequest && <Spinner />}
+        </div>
     );
 }
