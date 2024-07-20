@@ -14,30 +14,20 @@ export const back4appApi = () => {
 
         let parseFile;
 
-        const { newImage } = data;
-
-        if (newImage.name !== '') {
-            const newFileName = `photo.${newImage.name.split('.')[1]}`
-            parseFile = new Parse.File(newFileName, newImage);
+        if (data.imgUrl) {
+            const newFileName = `photo.${data.imgUrl.name.split('.')[1]}`;
+            parseFile = new Parse.File(newFileName, data.imgUrl);
         }
 
         try {
             if (parseFile !== undefined) {
-                await parseFile.save()
+                await parseFile.save();
                 data.imgUrl = parseFile;
-            } else {
-                data.imgUrl = null;
             }
-
-
+            
             const item = await query.get(id);
 
-            if (data.imgUrl !== null) {
-                item.set(data);
-            } else {
-                const { title, price, category, description } = data;
-                item.set({ title, price, category, description })
-            }
+            item.set(data);
 
             await item.save(null, { sessionToken });
 
@@ -47,7 +37,7 @@ export const back4appApi = () => {
 
             const { title, category, imgUrl, owner, price, description } = updateItem.attributes;
 
-            return { id: itemId, title, category, imgUrl: imgUrl._url, owner: owner.id, price, description }
+            return { id: itemId, title, category, imgUrl: imgUrl._url, owner: owner.id, price, description };
 
         } catch (error) {
             throw error.message;
@@ -89,14 +79,14 @@ export const back4appApi = () => {
 
         const { imgUrl } = params;
 
-        const fileName = `photo.${imgUrl.name.split('.')[1]}`
+        const fileName = `photo.${imgUrl.name.split('.')[1]}`;
         const parseFile = new Parse.File(fileName, imgUrl);
 
         params.user = currentUser;
 
 
         try {
-            await parseFile.save()
+            await parseFile.save();
 
             params.imgUrl = parseFile;
 
@@ -120,9 +110,9 @@ export const back4appApi = () => {
         try {
             const result = await Parse.Cloud.run('getItems');
             const data = result.items.map(item => {
-                item.imgUrl = item.imgUrl._url
-                return item
-            })
+                item.imgUrl = item.imgUrl._url;
+                return item;
+            });
             return data;
         } catch (error) {
             throw error.message;

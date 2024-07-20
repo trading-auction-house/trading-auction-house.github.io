@@ -33,9 +33,8 @@ export default function Owner({ item, user }) {
 
     const onSubmit = async () => {
         const result = await dispatch(closeItemOffer(id));
-        console.log(result);
+
         if (result.error) {
-            console.log(result.error)
             return;
         }
         navigate('/closed');
