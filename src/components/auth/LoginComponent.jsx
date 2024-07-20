@@ -6,12 +6,19 @@ import { useNavigate } from 'react-router-dom';
 import { formHandller } from '../../services/utility';
 
 import { setUserToCatalog } from '../../slices/itemsSlice';
-import { cleanAuthError, loginUser, selectAuthError} from '../../slices/authSlice';
+import { cleanAuthError, loginUser, selectAuthError, selectAuthStatus} from '../../slices/authSlice';
+import Spinner from '../common/Spinner';
 
 export default function Login() {
     const error = useSelector(selectAuthError);
+
+    const status = useSelector(selectAuthStatus);
+
     const dispatch = useDispatch();
+    
     const navigate = useNavigate();
+
+    const loginRequest = status === 'loginStarted'
 
     useEffect(() => {
         if(error){
@@ -36,7 +43,9 @@ export default function Login() {
     const onSubmut = formHandller(userLogin);
 
     return (
-        <section id="login-section" className="narrow">
+        <div>
+
+        {!loginRequest &&<section id="login-section" className="narrow">
 
             <h1 className="item">Login</h1>
 
@@ -54,14 +63,17 @@ export default function Login() {
                     </label>
 
                     <div className="align-center">
-                        <input className="action" type="submit" value="Sign In" />
+                        <input className="action" type="submit" value="Sign In" disabled={(loginRequest) ? 'disabled' : ''} />
                     </div>
 
                 </form>
 
             </div>
+        </section>}
 
-        </section>
+        {loginRequest && <Spinner />}
+
+        </div>
 
 
     );
