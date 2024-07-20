@@ -4,7 +4,7 @@ import { getUser, validator } from '../services/utility';
 
 import { back4appApi } from '../services/back4Dataservice';
 
-const { cloudLogin,cloudRegister,cloudLogout } = back4appApi();
+const { cloudLogin, cloudRegister, cloudLogout } = back4appApi();
 
 
 const userAdapter = createEntityAdapter();
@@ -67,6 +67,9 @@ const userSlice = createSlice({
 
     extraReducers: (builder) => {
         builder
+            .addCase(loginUser.pending, (state, action) => {
+                state.status = 'loginStarted'
+            })
             .addCase(loginUser.fulfilled, (state, action) => {
                 state.status = 'loginSucceeded';
                 state.persistedState = getUser();
@@ -78,17 +81,23 @@ const userSlice = createSlice({
 
                 state.error = action.payload;
             })
+            .addCase(registerUser.pending, (state, action) => {
+                state.status = 'registerStarted'
+            })
             .addCase(registerUser.fulfilled, (state, action) => {
                 state.status = 'registerSucceeded';
                 state.persistedState = getUser();
 
                 action.payload.type = 'user';
-                userAdapter.addOne(state,action.payload);
+                userAdapter.addOne(state, action.payload);
             })
             .addCase(registerUser.rejected, (state, action) => {
                 state.status = 'registerFaild';
 
                 state.error = action.payload;
+            })
+            .addCase(logoutUser.pending, (state, action) => {
+                state.status = 'logoutStarted'
             })
             .addCase(logoutUser.fulfilled, (state, action) => {
                 state.status = 'logoutSucceeded';
@@ -114,4 +123,5 @@ export const selectPersistedState = state => state.user.persistedState;
 
 export const selectAuthError = state => state.user.error;
 
+export const selectAuthStatus = state => state.user.status;
 
