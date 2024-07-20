@@ -43,8 +43,6 @@ export const editItem = createAsyncThunk(
 
             const result = await updateItem(data, id);
 
-            console.log(result)
-
             return result;
         } catch (error) {
             return rejectWithValue(error);
@@ -131,11 +129,17 @@ const itemsSlice = createSlice({
         },
         setErrorToCatalog(state, action) {
             state.error = action.payload;
+        },
+        clearClosedOffers(state, action) {
+            state.closedOffers = null;
         }
     },
 
     extraReducers: (builder) => {
         builder
+            .addCase(getItems.pending, (state, action) => {
+                state.status = 'fetchItemStarted';
+            })
             .addCase(getItems.fulfilled, (state, action) => {
                 state.status = 'fetchItemsSucceeded';
 
@@ -203,6 +207,9 @@ const itemsSlice = createSlice({
 
                 state.error = action.payload;
             })
+            .addCase(editItem.pending, (state, action) => {
+                state.status = 'editItemStarted';
+            })
             .addCase(editItem.fulfilled, (state, action) => {
                 state.status = 'editItemSucceeded';
 
@@ -212,6 +219,9 @@ const itemsSlice = createSlice({
                 state.status = 'editItemFaild';
 
                 state.error = action.payload;
+            })
+            .addCase(createItem.pending, (state, action) => {
+                state.status = 'createItemStarted';
             })
             .addCase(createItem.fulfilled, (state, action) => {
                 state.status = 'createItemSucceeded';
@@ -232,7 +242,7 @@ const itemsSlice = createSlice({
 
 export default itemsSlice.reducer;
 
-export const { setUserToCatalog, clearUserFromCatalog, cleanErrorFromCatalog, setErrorToCatalog } = itemsSlice.actions;
+export const { setUserToCatalog, clearUserFromCatalog, cleanErrorFromCatalog, setErrorToCatalog, clearClosedOffers } = itemsSlice.actions;
 
 export const { selectAll: selectItems, selectById: selectItemById } = itemsAdapter.getSelectors(state => state.items);
 
@@ -246,3 +256,5 @@ export const selectItemsError = state => state.items.error;
 export const selectUserFromCatalog = state => state.items.user;
 
 export const selectClosedOffers = state => state.items.closedOffers;
+
+export const selectItemsStatus = state => state.items.status;
