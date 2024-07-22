@@ -12,7 +12,7 @@ export const GuestGuard = ({
     const userFromCatalog = useSelector(state => selectUserFromCatalog(state));
 
     if (user || userFromCatalog) {
-        return <Navigate to='/catalog' />;
+        return <Navigate to='/' />;
     }
 
     return children ? children : <Outlet />;
