@@ -27,10 +27,14 @@ export default function Catalog() {
         if (authError) {
             dispatch(cleanAuthError());
         }
+
         if (itemsError) {
             dispatch(cleanErrorFromCatalog());
         }
-        dispatch(getItems())
+        
+        if(items.length === 0){
+            dispatch(getItems())
+        }
         // eslint-disable-next-line
     }, []);
 
