@@ -197,6 +197,9 @@ const itemsSlice = createSlice({
 
                 state.error = action.payload;
             })
+            .addCase(deleteItem.pending, (state, action) => {
+                state.status = 'deleteItemStarted';
+            })
             .addCase(deleteItem.fulfilled, (state, action) => {
                 state.status = 'deleteItemSucceeded';
                 itemsAdapter.removeOne(state, action.payload);
