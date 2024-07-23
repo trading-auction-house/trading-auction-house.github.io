@@ -63,8 +63,11 @@ export const back4appApi = () => {
 
     async function addItemBuyer(data, itemId) {
         const currentUser = getUser();
+
         data.user = currentUser;
+
         data.id = itemId;
+
         try {
             await Parse.Cloud.run('check', data);
 
@@ -109,10 +112,12 @@ export const back4appApi = () => {
     async function getCloudItems() {
         try {
             const result = await Parse.Cloud.run('getItems');
+
             const data = result.items.map(item => {
                 item.imgUrl = item.imgUrl._url;
                 return item;
             });
+
             return data;
         } catch (error) {
             throw error.message;
@@ -124,6 +129,7 @@ export const back4appApi = () => {
 
         try {
             const result = await Parse.Cloud.run('getUserClosedOffers', user);
+
             return result;
         } catch (error) {
             throw error.message;
@@ -177,9 +183,12 @@ export const back4appApi = () => {
 
     async function cloudLogout() {
         const params = getUser();
+
         try {
             const result = await Parse.Cloud.run('logout', params);
+
             clearUser();
+            
             return result;
         } catch (error) {
             throw error.message;
