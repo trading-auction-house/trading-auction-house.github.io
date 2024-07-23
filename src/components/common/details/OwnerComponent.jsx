@@ -6,7 +6,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import { getUser } from '../../../services/utility';
 
 import { cleanAuthError, selectAuthError } from '../../../slices/authSlice';
-import { cleanErrorFromCatalog, closeItemOffer, selectItemsError, setErrorToCatalog } from '../../../slices/itemsSlice';
+import { cleanErrorFromCatalog, closeItemOffer, selectItemsError, selectItemsStatus, setErrorToCatalog } from '../../../slices/itemsSlice';
+
+import Spinner from '../Spinner';
 
 
 export default function Owner({ item, user }) {
@@ -17,6 +19,8 @@ export default function Owner({ item, user }) {
 
     const itemsError = useSelector(selectItemsError);
     const authError = useSelector(selectAuthError);
+    const state = useSelector(selectItemsStatus);
+
 
     const [checkForUser, setCheck] = useState(false);
 
@@ -58,54 +62,57 @@ export default function Owner({ item, user }) {
 
 
     return (
-        <section id="catalog-section">
+        <div>
+            {state !== 'deleteItemStarted' ? 
+            <section id="catalog-section">
 
-            <h1 className="item">
-                {title}
-                <div className="f-right">
-                    <Link to={`/edit/${id}`} className="action pad-small f-left" >Edit</Link>
-                    <Link onClick={deleteItem} className="action pad-small f-left" >Delete</Link>
-                </div>
-            </h1>
-
-            <div className="item padded">
-
-                <div className="layout right large">
-
-                    <div className="col">
-                        <img src={imgUrl} className="img-large" alt="" />
+                <h1 className="item">
+                    {title}
+                    <div className="f-right">
+                        <Link to={`/edit/${id}`} className="action pad-small f-left" >Edit</Link>
+                        <Link onClick={deleteItem} className="action pad-small f-left" >Delete</Link>
                     </div>
+                </h1>
 
-                    <div className="content pad-med">
+                <div className="item padded">
 
-                        <p>In category: <strong>{category}</strong></p>
-                        <p>{description}</p>
+                    <div className="layout right large">
 
-                        <div className="align-center">
-                            <div>
-                                Current price: $<strong>{price}</strong>
-                            </div>
-
-                            <div>
-                                {buyer ?
-                                    <div>
-                                        Bid by <strong>{buyer.username} </strong>
-                                        <Link onClick={onSubmit} className="action pad-med cta">Close Auction</Link>
-                                    </div> :
-                                    <div>
-                                        No bids
-                                    </div>}
-                            </div>
+                        <div className="col">
+                            <img src={imgUrl} className="img-large" alt="" />
                         </div>
 
+                        <div className="content pad-med">
+
+                            <p>In category: <strong>{category}</strong></p>
+                            <p>{description}</p>
+
+                            <div className="align-center">
+                                <div>
+                                    Current price: $<strong>{price}</strong>
+                                </div>
+
+                                <div>
+                                    {buyer ?
+                                        <div>
+                                            Bid by <strong>{buyer.username} </strong>
+                                            <Link onClick={onSubmit} className="action pad-med cta">Close Auction</Link>
+                                        </div> :
+                                        <div>
+                                            No bids
+                                        </div>}
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
+
+                    <footer>
+                        <div>Listed by {user.username} </div>
+                    </footer>
                 </div>
 
-                <footer>
-                    <div>Listed by {user.username} </div>
-                </footer>
-            </div>
-
-        </section>
+            </section> : <Spinner />}
+        </div>
     );
 }
