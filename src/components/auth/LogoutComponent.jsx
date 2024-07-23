@@ -32,10 +32,11 @@ export default function Logout() {
             dispatch(clearClosedOffers());
         }
 
-        wait()
+        wait();
+        // eslint-disable-next-line
     }, []);
 
-    if(status === 'logoutStarted'){
-        return <Spinner />
+    if (status === 'logoutStarted') {
+        return <Spinner />;
     }
 }

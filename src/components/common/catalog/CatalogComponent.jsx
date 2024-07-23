@@ -21,7 +21,7 @@ export default function Catalog() {
 
     const status = useSelector(selectItemsStatus);
 
-    const fetchItemsRequest = status === 'fetchItemStarted'
+    const fetchItemsRequest = status === 'fetchItemStarted';
 
     useEffect(() => {
         if (authError) {
@@ -33,7 +33,7 @@ export default function Catalog() {
         }
         
         if(items.length === 0){
-            dispatch(getItems())
+            dispatch(getItems());
         }
         // eslint-disable-next-line
     }, []);

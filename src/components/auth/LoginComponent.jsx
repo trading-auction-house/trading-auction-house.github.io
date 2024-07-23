@@ -18,7 +18,7 @@ export default function Login() {
     
     const navigate = useNavigate();
 
-    const loginRequest = status === 'loginStarted'
+    const loginRequest = status === 'loginStarted';
 
     useEffect(() => {
         if(error){

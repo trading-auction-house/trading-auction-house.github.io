@@ -18,7 +18,7 @@ export default function Register() {
 
   const navigate = useNavigate();
 
-  const registerRequest = status === 'registerStarted'
+  const registerRequest = status === 'registerStarted';
 
 
   useEffect(() => {
