@@ -19,12 +19,13 @@ export const back4appApi = () => {
             parseFile = new Parse.File(newFileName, data.imgUrl);
         }
 
+
         try {
             if (parseFile !== undefined) {
                 await parseFile.save();
                 data.imgUrl = parseFile;
             }
-            
+
             const item = await query.get(id);
 
             item.set(data);
@@ -99,11 +100,11 @@ export const back4appApi = () => {
 
             const itemId = result.id;
 
-            const { title, category, imgUrl, owner, price } = result.attributes;
+            const { title, category, imgUrl, owner, price, description } = result.attributes;
 
             const itemOwner = owner.id;
 
-            return { id: itemId, title, category, imgUrl, owner: itemOwner, price };
+            return { id: itemId, title, category, imgUrl, owner: itemOwner, price, description };
         } catch (error) {
             throw error.message;
         }
@@ -188,7 +189,7 @@ export const back4appApi = () => {
             const result = await Parse.Cloud.run('logout', params);
 
             clearUser();
-            
+
             return result;
         } catch (error) {
             throw error.message;
