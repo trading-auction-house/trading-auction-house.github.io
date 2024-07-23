@@ -45,6 +45,11 @@
         text-align: center;
     }
 
+    form label {
+        display: flex;
+        flex-direction: column;
+    }
+
     .layout.right .col {
         float: none;
     }
@@ -96,15 +101,15 @@
         margin-right: -16px;
     }
 
-    #delete {       
+    #delete {
         flex-wrap: wrap;
     }
 
-    #delete > button:nth-child(1){
+    #delete>button:nth-child(1) {
         margin: 16px;
     }
 
-    #delete > button:nth-child(2){
+    #delete>button:nth-child(2) {
         margin: 16px;
     }
 
