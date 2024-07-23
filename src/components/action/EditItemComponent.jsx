@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-restricted-imports */
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -6,7 +7,7 @@ import Spinner from '../common/Spinner';
 
 import { formHandller } from '../../services/utility';
 
-import { editItem, selectItemById, selectItemsStatus } from '../../slices/itemsSlice';
+import { editItem, getItems, selectItemById, selectItems, selectItemsStatus } from '../../slices/itemsSlice';
 
 export default function Edit() {
     const dispatch = useDispatch();
@@ -20,6 +21,15 @@ export default function Edit() {
     const status = useSelector(selectItemsStatus);
 
     const editRequest = status === 'editItemStarted';
+
+    const items = useSelector(state => selectItems(state));
+
+    useEffect(() => {        
+        if(items.length === 0){
+            dispatch(getItems());
+        }
+        // eslint-disable-next-line
+    }, []);
 
     const editCurrentItem = async (data) => {
         let result;
