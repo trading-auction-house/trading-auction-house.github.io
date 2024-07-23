@@ -95,6 +95,11 @@ html {
     background-color: red;
 }
 
+#delete>button:hover{
+    cursor: pointer;
+    background-color: rgba(0, 255, 213, 0.372);
+}
+
 .devicePicture{
    display: flex;
    justify-content: space-evenly;
