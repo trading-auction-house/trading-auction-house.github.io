@@ -10,9 +10,9 @@ const { getCloudItems, saveItem, updateItem, addItemBuyer, closeOffer, getUserCl
 
 export const getItems = createAsyncThunk(
     'items/fetchItems',
-    async (_, { rejectWithValue }) => {
+    async (data, { rejectWithValue }) => {
         try {
-            const items = await getCloudItems();
+            const items = await getCloudItems(data);
             return items;
         } catch (error) {
             return rejectWithValue(error);
@@ -142,7 +142,7 @@ const itemsSlice = createSlice({
             .addCase(getItems.fulfilled, (state, action) => {
                 state.status = 'fetchItemsSucceeded';
 
-                itemsAdapter.addMany(state, action.payload);
+                itemsAdapter.setAll(state, action.payload);
 
                 if (action.payload.user) {
                     state.user.id = action.payload.user;
