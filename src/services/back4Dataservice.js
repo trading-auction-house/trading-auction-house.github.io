@@ -110,9 +110,9 @@ export const back4appApi = () => {
         }
     }
 
-    async function getCloudItems() {
+    async function getCloudItems(params) {
         try {
-            const result = await Parse.Cloud.run('getItems');
+            const result = await Parse.Cloud.run('getItems',params);
 
             const data = result.items.map(item => {
                 item.imgUrl = item.imgUrl._url;
