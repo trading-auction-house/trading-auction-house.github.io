@@ -5,20 +5,26 @@ import { useDispatch, useSelector } from 'react-redux';
 import FinishedOffers from './FinishedOffersComponent';
 
 import { cleanAuthError, selectAuthError } from '../../../slices/authSlice';
-import { cleanErrorFromCatalog, getClosedUserItems, selectClosedOffers, selectItemsError } from '../../../slices/itemsSlice';
+import { cleanErrorFromCatalog, getClosedUserItems, selectClosedOffers, selectItemsError, selectItemsStatus } from '../../../slices/itemsSlice';
 import Spinner from '../Spinner';
 
 
 export default function UserClosedOffers() {
-    const authError = useSelector(selectAuthError);
-    const itemsError = useSelector(selectItemsError);
-    const offers = useSelector( selectClosedOffers);
-    
     const dispatch = useDispatch();
+
+    const authError = useSelector(selectAuthError);
+
+    const itemsError = useSelector(selectItemsError);
+
+    const offers = useSelector(selectClosedOffers);
+
+    const status = useSelector(selectItemsStatus);
+    
+    const fetchUserClosedOffersRequest = status === 'fetchUserClosedOffersStart'
 
     useEffect(() => {
         dispatch(getClosedUserItems());
-        
+
         if (authError) {
             dispatch(cleanAuthError());
         }
@@ -28,7 +34,7 @@ export default function UserClosedOffers() {
         // eslint-disable-next-line
     }, []);
 
-    if(!offers){
+    if (!offers || fetchUserClosedOffersRequest) {
         return (
             <Spinner />
         );
