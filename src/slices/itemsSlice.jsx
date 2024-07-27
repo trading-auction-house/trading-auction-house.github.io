@@ -171,6 +171,9 @@ const itemsSlice = createSlice({
 
                 state.error = action.payload;
             })
+            .addCase(getClosedUserItems.pending, (state, action) => {
+                state.status = 'fetchUserClosedOffersStart';
+            })
             .addCase(getClosedUserItems.fulfilled, (state, action) => {
                 state.status = 'fetchUserClosedOffers';
 
