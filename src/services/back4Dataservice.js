@@ -114,12 +114,12 @@ export const back4appApi = () => {
         try {
             const result = await Parse.Cloud.run('getItems',params);
 
-            const data = result.items.map(item => {
+            result.items.map(item => {
                 item.imgUrl = item.imgUrl._url;
                 return item;
             });
 
-            return data;
+            return result;
         } catch (error) {
             throw error.message;
         }
