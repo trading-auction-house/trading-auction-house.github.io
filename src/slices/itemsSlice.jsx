@@ -12,8 +12,8 @@ export const getItems = createAsyncThunk(
     'items/fetchItems',
     async (data, { rejectWithValue }) => {
         try {
-            const items = await getCloudItems(data);
-            return items;
+            const result = await getCloudItems(data);
+            return result;
         } catch (error) {
             return rejectWithValue(error);
         }
@@ -110,7 +110,8 @@ const initialState = itemsAdapter.getInitialState({
     status: 'idle',
     error: null,
     user: getUser(),
-    closedOffers: null
+    closedOffers: null,
+    oldSkip: undefined
 });
 
 const itemsSlice = createSlice({
@@ -142,11 +143,9 @@ const itemsSlice = createSlice({
             .addCase(getItems.fulfilled, (state, action) => {
                 state.status = 'fetchItemsSucceeded';
 
-                itemsAdapter.setAll(state, action.payload);
+                state.oldSkip = action.payload.skip;
 
-                if (action.payload.user) {
-                    state.user.id = action.payload.user;
-                }
+                itemsAdapter.setAll(state, action.payload.items);
             })
             .addCase(getItems.rejected, (state, action) => {
                 state.status = 'fetchItemsFaild';
@@ -263,3 +262,5 @@ export const selectUserFromCatalog = state => state.items.user;
 export const selectClosedOffers = state => state.items.closedOffers;
 
 export const selectItemsStatus = state => state.items.status;
+
+export const selectItemsSkip = state => state.items.oldSkip;
