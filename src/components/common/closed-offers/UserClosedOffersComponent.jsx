@@ -23,7 +23,9 @@ export default function UserClosedOffers() {
     const fetchUserClosedOffersRequest = status === 'fetchUserClosedOffersStart'
 
     useEffect(() => {
-        dispatch(getClosedUserItems());
+        if(!offers || (offers.length === 0 ) ){
+            dispatch(getClosedUserItems());
+        }
 
         if (authError) {
             dispatch(cleanAuthError());
