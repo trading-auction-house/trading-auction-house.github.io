@@ -6,7 +6,7 @@ import { back4appApi } from '../services/back4Dataservice';
 
 const itemsAdapter = createEntityAdapter();
 
-const { getCloudItems, saveItem, updateItem, addItemBuyer, closeOffer, getUserClosedOffers, deleteItemFDB } = back4appApi();
+const { getCloudItems, saveItem, updateItem, addItemBuyer, closeOffer, getUserClosedOffers, deleteItemFDB, searchItems } = back4appApi();
 
 export const getItems = createAsyncThunk(
     'items/fetchItems',
@@ -101,7 +101,18 @@ export const makeOffer = createAsyncThunk(
             };
         } catch (error) {
             return rejectWithValue(error);
+        }
+    }
+);
 
+export const search = createAsyncThunk(
+    'items/search',
+    async (data, { rejectWithValue }) => {
+        try {
+            const result = await searchItems(data)
+            return result;
+        } catch (error) {
+            return rejectWithValue(error);
         }
     }
 );
@@ -111,7 +122,8 @@ const initialState = itemsAdapter.getInitialState({
     error: null,
     user: getUser(),
     closedOffers: null,
-    oldSkip: undefined
+    oldSkip: undefined,
+    searchArray: null
 });
 
 const itemsSlice = createSlice({
@@ -238,9 +250,17 @@ const itemsSlice = createSlice({
                 state.status = 'createItemFail';
 
                 state.error = action.payload;
+            })
+            .addCase(search.fulfilled, (state, action) => {
+                state.status = 'searchSucceeded'
+
+                state.searchArray = action.payload.items
+            })
+            .addCase(search.rejected, (state, action) => {
+                state.status = 'searchFail';
+
+                state.error = action.payload;
             });
-
-
     }
 });
 
@@ -264,3 +284,5 @@ export const selectClosedOffers = state => state.items.closedOffers;
 export const selectItemsStatus = state => state.items.status;
 
 export const selectItemsSkip = state => state.items.oldSkip;
+
+export const selectSearchArray = state => state.items.searchArray;
