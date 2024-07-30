@@ -131,6 +131,11 @@ export const back4appApi = () => {
         try {
             const result = await Parse.Cloud.run('getUserClosedOffers', user);
 
+            result.items.map(item => {
+                item.imgUrl = item.imgUrl._url;
+                return item;
+            });
+
             return result;
         } catch (error) {
             throw error.message;
@@ -148,6 +153,21 @@ export const back4appApi = () => {
             await item.destroy({ sessionToken });
         } catch (error) {
             throw error.message;
+        }
+    }
+
+    async function searchItems(data) {
+        try {
+            const result = await Parse.Cloud.run('search', data);
+
+            result.items.map(item => {
+                item.imgUrl = item.imgUrl._url;
+                return item;
+            });
+
+            return result;
+        } catch (error) {
+             console.log(error.message);
         }
     }
 
@@ -207,7 +227,8 @@ export const back4appApi = () => {
         addItemBuyer,
         closeOffer,
         getUserClosedOffers,
-        deleteItemFDB
+        deleteItemFDB,
+        searchItems
     };
 
 };
