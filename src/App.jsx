@@ -24,6 +24,7 @@ import Spinner from './components/common/Spinner';
 import Edit from './components/action/EditItemComponent';
 import Search from './components/action/SearchComponent';
 import CreateItem from './components/action/CreateComponent';
+import { SearchTable } from './components/action/SearchTable';
 
 const UserClosedOffers = lazy(() => import('./components/common/closed-offers/UserClosedOffersComponent'));
 const Catalog = lazy(() => import('./components/common/catalog/CatalogComponent'));
@@ -46,6 +47,7 @@ function App() {
               <Route path='/catalog' element={<Catalog />} />
               <Route path='/details/:id' element={<Details />} />
               <Route path='/search' element={<Search />} />
+              <Route path='/search-table' element={<SearchTable />} />
 
               <Route element={<AuthGuard />}>
                 <Route path='/closed' element={<UserClosedOffers />} />
