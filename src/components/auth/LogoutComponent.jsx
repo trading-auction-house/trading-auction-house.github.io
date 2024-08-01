@@ -30,6 +30,7 @@ export default function Logout() {
             }
             dispatch(clearUserFromCatalog());
             dispatch(clearClosedOffers());
+            sessionStorage.clear();
         }
 
         wait();
