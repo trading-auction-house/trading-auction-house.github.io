@@ -1,14 +1,13 @@
 /* eslint-disable @typescript-eslint/no-restricted-imports */
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { SearchTable } from './SearchTable';
-
-import { formHandller } from '../../services/utility';
+import { formHandller, getUser, setSearch, setSearchData } from '../../services/utility';
 
 import { cleanAuthError, selectAuthError } from '../../slices/authSlice';
-import { cleanErrorFromCatalog, search, selectItemsError, selectSearchArray } from '../../slices/itemsSlice';
-import { useNavigate } from 'react-router-dom';
+import { cleanErrorFromCatalog, search, selectItemsError, selectItemsStatus } from '../../slices/itemsSlice';
+import Spinner from '../common/Spinner';
 
 export default function Search() {
     const dispatch = useDispatch();
@@ -17,7 +16,14 @@ export default function Search() {
 
     const authError = useSelector(selectAuthError);
     const itemsError = useSelector(selectItemsError);
+    const status = useSelector(selectItemsStatus);
 
+    const user = getUser();
+
+    const fetchSearchItems = status === 'searchStarted';
+
+    const query = new URLSearchParams(location.search);
+    let skip = parseInt(query.get('skip'), 10) || 0;
 
     useEffect(() => {
         if (authError) {
@@ -42,6 +48,12 @@ export default function Search() {
     const searchItems = async (data, event) => {
         const searchTarget = Object.fromEntries(Object.entries(data).filter(x => x[1] !== ''));
 
+        searchTarget.skip = skip;
+
+        if(user){
+        searchTarget.user = user;
+        }
+
         const selectItems = await dispatch(search(searchTarget));
 
         if (selectItems.error) {
@@ -49,10 +61,13 @@ export default function Search() {
         } else {
             if (itemsError) {
                 dispatch(cleanErrorFromCatalog());
+                dispatch(cleanAuthError());
             }
         }
+        
+        selectItems ? setSearch(selectItems.payload.result.items) : sessionStorage.clear();
 
-        selectItems ? sessionStorage.setItem('search', JSON.stringify(selectItems.payload.items)) : sessionStorage.clear();
+        setSearchData(searchTarget);
 
         Array.from(event.target).forEach((e) => (e.value = ''));
 
@@ -61,6 +76,12 @@ export default function Search() {
 
 
     const onSubmit = formHandller(searchItems);
+
+    if (fetchSearchItems) {
+        return (
+            <Spinner />
+        )
+    }
 
     return (
         <section id="login-section" className="spaced">
