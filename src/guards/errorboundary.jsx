@@ -1,4 +1,5 @@
 import React from 'react';
+import { Navigate } from 'react-router-dom';
 import Spinner from '../components/common/Spinner';
 
 export default class ErrorBoundary extends React.Component {
@@ -23,7 +24,9 @@ export default class ErrorBoundary extends React.Component {
 
     render() {
         if (this.state.redirect) {
-            return window.location.reload();;
+            this.setState({ hasError: false })
+            this.setState({ redirect: false })
+            return <Navigate to="/login" />;
         }
         if (this.state.hasError) {
             localStorage.clear();
