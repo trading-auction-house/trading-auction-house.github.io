@@ -108,7 +108,7 @@ export default function Owner({ item, user }) {
                     </div>
 
                     <footer>
-                        <div>Listed by {user.username} </div>
+                        <div>Listed by {user?.username} </div>
                     </footer>
                 </div>
 
