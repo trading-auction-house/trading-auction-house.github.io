@@ -26,8 +26,8 @@ import Search from './components/action/SearchComponent';
 import CreateItem from './components/action/CreateComponent';
 import { SearchTable } from './components/action/SearchTable';
 
-const UserClosedOffers = lazy(() => import('./components/common/closed-offers/UserClosedOffersComponent'));
 const Catalog = lazy(() => import('./components/common/catalog/CatalogComponent'));
+const UserClosedOffers = lazy(() => import('./components/common/closed-offers/UserClosedOffersComponent'));
 
 function App() {
   const authError = useSelector(selectAuthError);
