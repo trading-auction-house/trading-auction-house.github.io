@@ -24,7 +24,31 @@ export function formHandller(callback) {
 
         callback(data, event);
     };
+};
+
+export function getSearch() {
+    try {
+        return JSON.parse(sessionStorage.getItem('search'));
+    } catch (error) {
+        return undefined;
+    }
+};
+
+export function setSearch(data) {
+    return sessionStorage.setItem('search', JSON.stringify(data));
+};
+
+export function getSearchData(){
+    try {
+        return JSON.parse(sessionStorage.getItem('searchData'));
+    } catch (error) {
+        return undefined;
+    }
 }
+
+export function setSearchData(data) {
+    return sessionStorage.setItem('searchData', JSON.stringify(data));
+};
 
 
 export const validator = (value) => {
