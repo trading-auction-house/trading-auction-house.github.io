@@ -110,7 +110,7 @@ export const search = createAsyncThunk(
     async (data, { rejectWithValue }) => {
         try {
             const result = await searchItems(data)
-            return result;
+            return { result, data };
         } catch (error) {
             return rejectWithValue(error);
         }
@@ -123,6 +123,9 @@ const initialState = itemsAdapter.getInitialState({
     user: getUser(),
     closedOffers: null,
     oldSkip: undefined,
+    oldSearchSkip: undefined,
+    oldSearchSkip: undefined,
+    oldSearchData: null,
     searchArray: null
 });
 
@@ -251,10 +254,17 @@ const itemsSlice = createSlice({
 
                 state.error = action.payload;
             })
+            .addCase(search.pending, (state, action) => {
+                state.status = 'searchStarted';
+            })
             .addCase(search.fulfilled, (state, action) => {
-                state.status = 'searchSucceeded'
+                state.status = 'searchSucceeded';
 
-                state.searchArray = action.payload.items
+                state.oldSearchSkip = action.payload.result.skip;
+
+                state.searchArray = action.payload.result.items;
+
+                state.oldSearchData = action.payload.data;
             })
             .addCase(search.rejected, (state, action) => {
                 state.status = 'searchFail';
@@ -284,5 +294,9 @@ export const selectClosedOffers = state => state.items.closedOffers;
 export const selectItemsStatus = state => state.items.status;
 
 export const selectItemsSkip = state => state.items.oldSkip;
+
+export const selectOldSearchSkip = state => state.items.oldSearchSkip;
+
+export const selectSearchData = state => state.items.oldSearchData;
 
 export const selectSearchArray = state => state.items.searchArray;
