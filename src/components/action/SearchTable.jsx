@@ -7,7 +7,7 @@ import Spinner from '../common/Spinner';
 
 import { search, selectItemsStatus, selectOldSearchSkip, selectSearchArray, selectSearchData } from '../../slices/itemsSlice';
 
-import { getSearch, getSearchData, getUser, setSearchData } from '../../services/utility';
+import { getSearch, getSearchData, getUser, setSearch, setSearchData } from '../../services/utility';
 
 export const SearchTable = () => {
     const dispatch = useDispatch();
@@ -25,25 +25,32 @@ export const SearchTable = () => {
     const oldSearchData = useSelector(selectSearchData) || getSearchData();
 
     const fetchSearchItems = status === 'searchStarted';
-    
+
     const query = new URLSearchParams(location.search);
     const skip = parseInt(query.get('skip'), 10) || 0;
 
-    const newSearch = {...oldSearchData}
+    const newSearch = { ...oldSearchData }
 
     newSearch.skip = skip;
 
-    if(user){
+    if (user) {
         newSearch.user = user;
     }
 
     useEffect(() => {
 
-        if (oldSkip !== skip) {
-            dispatch(search(newSearch));
-            setSearchData(newSearch);
+        async function getSearch() {
+
+            if (oldSkip !== skip) {
+                const result = await dispatch(search(newSearch));
+
+                setSearchData(newSearch);
+
+                setSearch(result.payload.result.items);
+            }
         }
 
+        getSearch();
         // eslint-disable-next-line
     }, [skip]);
 
