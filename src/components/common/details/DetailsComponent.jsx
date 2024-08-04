@@ -19,7 +19,7 @@ export default function Details() {
 
     const searchItems = useSelector(selectSearchArray) || getSearch();
 
-    const item = useSelector(state => selectItemById(state, id)) || searchItems.filter(item => item.id === id)[0];
+    const item = useSelector(state => selectItemById(state, id)) || searchItems?.filter(item => item.id === id)[0];
 
     const user = useSelector(state => selectUserFromCatalog(state));
 
