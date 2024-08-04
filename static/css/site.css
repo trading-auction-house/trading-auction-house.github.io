@@ -95,27 +95,33 @@ html {
     background-color: red;
 }
 
+#delete>button:hover{
+    cursor: pointer;
+    background-color: rgba(0, 255, 213, 0.372);
+}
+
 .devicePicture{
    display: flex;
-   justify-content: space-evenly;
+   justify-content: space-around;
    margin-left: 28px;
    margin-top: 8px;
    margin-bottom: 8px;
 }
 
-.devicePicture>span{
+/* .devicePicture>span{
     margin-left: 17px;
-}
+} */
 
 .devicePicture>label{
     border: 1px solid black;
     width: 200px;
     background-color: white;
     cursor: pointer;
-    height: 24px;
+    text-align: center;
 }
 
 .devicePicture>label>input{
+    margin: 0px;
     opacity: 0;
     width: 0px;
     height: 0px;
