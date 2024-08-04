@@ -124,7 +124,6 @@ const initialState = itemsAdapter.getInitialState({
     closedOffers: null,
     oldSkip: undefined,
     oldSearchSkip: undefined,
-    oldSearchSkip: undefined,
     oldSearchData: null,
     searchArray: null
 });
