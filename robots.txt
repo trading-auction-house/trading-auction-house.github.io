@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://trading-auction-house.github.io/sitemap.xml
